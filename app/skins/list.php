@@ -76,7 +76,7 @@ class MEC_skin_list extends MEC_skins
         $this->month_divider = isset($this->skin_options['month_divider']) ? $this->skin_options['month_divider'] : true;
         
         // The style
-        $this->style = isset($this->skin_options['style']) ? $this->skin_options['style'] : 'modern';
+        $this->style = isset($this->skin_options['style']) ? $this->skin_options['style'] : 'standard';
         
         // Override the style if the style forced by us in a widget etc
         if(isset($this->atts['style']) and trim($this->atts['style']) != '') $this->style = $this->atts['style'];
@@ -120,7 +120,7 @@ class MEC_skin_list extends MEC_skins
         // Sort Options
         $this->args['orderby'] = 'meta_value';
         $this->args['order'] = 'ASC';
-        $this->args['meta_key'] = 'mec_start_day_seconds';
+        $this->args['meta_key'] = 'mec_start_date';
         
         // Show Past Events
         $this->args['mec-past-events'] = isset($this->atts['show_past_events']) ? $this->atts['show_past_events'] : '0';

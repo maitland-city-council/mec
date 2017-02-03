@@ -5,8 +5,6 @@ defined('_MECEXEC_') or die();
 $styling = $this->main->get_styling();
 $event = $this->events[0];
 $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])) ? 'colorskin-custom' : '';
-
-$occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '';
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?> clearfix <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     <article class="mec-single-event">
@@ -21,7 +19,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
             <?php echo $this->main->module('export.details', array('event'=>$event)); ?>
 
             <!-- Countdown module -->
-            <?php if($this->main->can_show_countdown_module($event)): ?>
+            <?php if($this->main->can_show_countdown_module($this->events[0])): ?>
             <div class="mec-events-meta-group mec-events-meta-group-countdown">
                 <?php echo $this->main->module('countdown.details', array('event'=>$this->events)); ?>
             </div> 
@@ -44,7 +42,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
             <?php endif; ?>
 
             <!-- Booking Module -->
-            <?php if($this->main->can_show_booking_module($event)): ?>
+            <?php if($this->main->can_show_booking_module($this->events[0])): ?>
             <div id="mec-events-meta-group-booking" class="mec-events-meta-group mec-events-meta-group-booking">
                 <?php echo $this->main->module('booking.default', array('event'=>$this->events)); ?>
             </div>
@@ -66,24 +64,24 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         <div class="mec-single-event-date">
                             <i class="mec-sl-calendar"></i>
                             <h3 class="mec-date"><?php _e('Date', 'mec'); ?></h3>
-                            <dd><abbr class="mec-events-abbr"><?php echo $this->main->date_label((trim($occurrence) ? array('date'=>$occurrence) : $event->date['start']), (isset($event->date['end']) ? $event->date['end'] : NULL), $this->date_format1); ?></abbr></dd>
+                            <dd><abbr class="mec-events-abbr"><?php echo $this->main->date_label($event->date['start'], (isset($event->date['end']) ? $event->date['end'] : NULL), $this->date_format1); ?></abbr></dd>
                         </div>
 
                         <?php  
                         if(isset($event->data->meta['mec_hide_time']) and $event->data->meta['mec_hide_time'] == '0')
                         {
-                            $time_comment = $event->data->meta['mec_comment'];
-                            $allday = $event->data->meta['mec_allday'];
+                            global $post;
+                            $time_comment = get_post_meta($post->ID, 'mec_comment', true);
+                            $allday = get_post_meta($post->ID, 'mec_allday', true);
                             ?>
                             <div class="mec-single-event-time">
                                 <i class="mec-sl-clock " style=""></i>
                                 <h3 class="mec-time"><?php _e('Time', 'mec'); ?></h3>
                                 <i class="mec-time-comment"><?php echo (isset($time_comment) ? $time_comment : ''); ?></i>
-                                
                                 <?php if($allday == '0' and isset($event->data->time) and trim($event->data->time['start'])): ?>
-                                <dd><abbr class="mec-events-abbr"><?php echo $event->data->time['start']; ?><?php echo (trim($event->data->time['end']) ? ' - '.$event->data->time['end'] : ''); ?></abbr></dd>
+                                    <dd><abbr class="mec-events-abbr"><?php echo $event->data->time['start']; ?><?php echo (trim($event->data->time['end']) ? ' - '.$event->data->time['end'] : ''); ?></abbr></dd>
                                 <?php else :?>
-                                <dd><abbr class="mec-events-abbr"><?php _e('All of the day', 'mec'); ?></abbr></dd>
+                                    <dd><abbr class="mec-events-abbr"><?php _e('All of the day', 'mec'); ?></abbr></dd>
                                 <?php endif; ?>    
                             </div>
                         <?php
@@ -113,7 +111,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         <div class="mec-event-more-info">
                             <i class="mec-sl-info"></i>
                             <h3 class="mec-cost"><?php _e('More Info', 'mec'); ?></h3>
-                            <dd class="mec-events-event-more-info"><a class="mec-more-info-button mec-color-hover" target="<?php echo (isset($event->data->meta['mec_more_info_target']) ? $event->data->meta['mec_more_info_target'] : '_self'); ?>" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo ((isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) ? $event->data->meta['mec_more_info_title'] : __('Read More', 'mec')); ?></a></dd>
+                            <dd class="mec-events-event-more-info"><a class="mec-more-info-button mec-color-hover" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo ((isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) ? $event->data->meta['mec_more_info_title'] : __('Read More', 'mec')); ?></a></dd>
                         </div>
                         <?php
                     }
@@ -147,7 +145,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         <?php if($location['thumbnail']): ?>
                         <img class="mec-img-location" src="<?php echo esc_url($location['thumbnail'] ); ?>" alt="<?php echo (isset($location['name']) ? $location['name'] : ''); ?>">
                         <?php endif; ?>
-                        <i class="mec-sl-location-pin"></i>
+                        <i class="mec-sl-calendar"></i>
                         <h3 class="mec-events-single-section-title mec-location"><?php _e('Location', 'mec'); ?></h3>
                         <dd class="author fn org"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></dd>
                         <dd class="location"><address class="mec-events-address"><span class="mec-address"><?php echo (isset($location['address']) ? $location['address'] : ''); ?></span></address></dd>
@@ -168,7 +166,8 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         $cats = array();
                         foreach($event->data->categories as $category)
                         {
-                            echo '<dd class="mec-events-event-categories"><a href="'.get_category_link($category['id']).'" class="mec-color-hover" rel="tag">'.$category['name'].'</a></dd>';
+                            $cat_id = $category['id'];
+                            echo '<dd class="mec-events-event-categories"><a href="'.get_category_link($cat_id).'" class="mec-color-hover" rel="tag">'.$category['name'].'</a></dd>';
                         }
                         ?>
                     </div>
@@ -204,7 +203,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         <dd class="mec-organizer-email">
                             <i class="mec-sl-envelope"></i>
                             <h6><?php _e('Email', 'mec'); ?></h6>
-                            <span><?php echo $organizer['email']; ?></span>
+                            <span><a href="mailto:<?php echo $organizer['email']; ?>" class="mec-color-hover"><?php echo $organizer['email']; ?></span>
                         </dd>
                         <?php endif;
                         if(isset($organizer['url']) && !empty($organizer['url'])): ?>
@@ -220,19 +219,14 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                 ?>
 
                 <!-- Register Booking Button -->
-                <?php if($this->main->can_show_booking_module($event)): ?>
+                <?php if($this->main->can_show_booking_module($this->events[0])): ?>
                     <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking"><?php esc_html_e('REGISTER', 'mec'); ?></a>
                 <?php endif ?>
                 
             </div>      
-            
-            <!-- Attendees List Module -->
-            <?php echo $this->main->module('attendees-list.details', array('event'=>$event)); ?>
-            
-            <!-- Links Module -->
+
             <?php echo $this->main->module('links.details', array('event'=>$event)); ?>
-            
-            <!-- Google Maps Module -->
+
             <div class="mec-events-meta-group mec-events-meta-group-gmap">
                 <?php echo $this->main->module('googlemap.details', array('event'=>$this->events)); ?>
             </div>

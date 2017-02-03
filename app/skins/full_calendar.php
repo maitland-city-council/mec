@@ -111,9 +111,9 @@ class MEC_skin_full_calendar extends MEC_skins
             case 'monthly':
                 
                 $atts = $this->atts;
-                $atts['sk-options']['monthly_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
-                $atts['sk-options']['monthly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
-                $atts['sk-options']['monthly_view']['style'] = 'clean';
+                $atts['sk-options']['monthly_view']['start_date_type'] = $this->skin_options['start_date_type'];
+                $atts['sk-options']['monthly_view']['start_date'] = $this->skin_options['start_date'];
+                $atts['sk-options']['monthly_view']['style'] = 'modern';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vmonth($atts);
@@ -123,8 +123,8 @@ class MEC_skin_full_calendar extends MEC_skins
             case 'weekly':
                 
                 $atts = $this->atts;
-                $atts['sk-options']['weekly_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
-                $atts['sk-options']['weekly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
+                $atts['sk-options']['weekly_view']['start_date_type'] = $this->skin_options['start_date_type'];
+                $atts['sk-options']['weekly_view']['start_date'] = $this->skin_options['start_date'];
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vweek($atts);
@@ -134,8 +134,8 @@ class MEC_skin_full_calendar extends MEC_skins
             case 'daily':
                 
                 $atts = $this->atts;
-                $atts['sk-options']['daily_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
-                $atts['sk-options']['daily_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
+                $atts['sk-options']['daily_view']['start_date_type'] = $this->skin_options['start_date_type'];
+                $atts['sk-options']['daily_view']['start_date'] = $this->skin_options['start_date'];
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vday($atts);
@@ -146,9 +146,9 @@ class MEC_skin_full_calendar extends MEC_skins
             default:
                 
                 $atts = $this->atts;
-                $atts['sk-options']['list']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
-                $atts['sk-options']['list']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
-                $atts['sk-options']['list']['style'] = 'standard';
+                $atts['sk-options']['list']['start_date_type'] = $this->skin_options['start_date_type'];
+                $atts['sk-options']['list']['start_date'] = $this->skin_options['start_date'];
+                $atts['sk-options']['list']['style'] = 'minimal';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vlist($atts);
