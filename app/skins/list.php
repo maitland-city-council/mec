@@ -76,7 +76,7 @@ class MEC_skin_list extends MEC_skins
         $this->month_divider = isset($this->skin_options['month_divider']) ? $this->skin_options['month_divider'] : true;
         
         // The style
-        $this->style = isset($this->skin_options['style']) ? $this->skin_options['style'] : 'modern';
+        $this->style = isset($this->skin_options['style']) ? $this->skin_options['style'] : 'standard';
         
         // Override the style if the style forced by us in a widget etc
         if(isset($this->atts['style']) and trim($this->atts['style']) != '') $this->style = $this->atts['style'];
