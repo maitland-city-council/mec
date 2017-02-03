@@ -113,7 +113,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts = $this->atts;
                 $atts['sk-options']['monthly_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
                 $atts['sk-options']['monthly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
-                $atts['sk-options']['monthly_view']['style'] = 'clean';
+                $atts['sk-options']['monthly_view']['style'] = 'modern';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vmonth($atts);
@@ -148,7 +148,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts = $this->atts;
                 $atts['sk-options']['list']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
                 $atts['sk-options']['list']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
-                $atts['sk-options']['list']['style'] = 'standard';
+                $atts['sk-options']['list']['style'] = 'minimal';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vlist($atts);
