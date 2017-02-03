@@ -204,7 +204,7 @@ $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence
                         <dd class="mec-organizer-email">
                             <i class="mec-sl-envelope"></i>
                             <h6><?php _e('Email', 'mec'); ?></h6>
-                            <span><?php echo $organizer['email']; ?></span>
+                            <span><a href="mailto:<?php echo $organizer['email']; ?>" class="mec-color-hover"><?php echo $organizer['email']; ?></span>
                         </dd>
                         <?php endif;
                         if(isset($organizer['url']) && !empty($organizer['url'])): ?>
